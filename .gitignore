@@ -1,0 +1,17 @@
+# secrets and local config
+.env
+*.env.local
+
+# logs and spool output
+*.log
+
+# dependencies and builds (for M3)
+node_modules/
+dist/
+build/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
