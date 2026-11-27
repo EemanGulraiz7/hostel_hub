@@ -1,0 +1,345 @@
+
+PL/SQL procedure successfully completed.
+
+
+PL/SQL procedure successfully completed.
+
+
+=====================================================================
+IX1  meal_log (meal_date, meal_type_id)
+Query: meals served per meal type on 20-Nov-2026
+=====================================================================
+----- IX1 BEFORE: EXPLAIN PLAN (expect a FULL scan of MEAL_LOG or of UQ_MEAL_ONCE)
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 2256334840
+
+----------------------------------------------------------------------------------------------
+| Id  | Operation		| Name		     | Rows  | Bytes | Cost (%CPU)| Time     |
+----------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT	|		     |	   3 |	  81 |	  10  (10)| 00:00:01 |
+|*  1 |  HASH JOIN		|		     |	   3 |	  81 |	  10  (10)| 00:00:01 |
+|   2 |   VIEW			| VW_GBF_7	     |	   3 |	  48 |	   8  (13)| 00:00:01 |
+|   3 |    HASH GROUP BY	|		     |	   3 |	  33 |	   8  (13)| 00:00:01 |
+|*  4 |     INDEX FAST FULL SCAN| UQ_MEAL_ONCE	     |	  47 |	 517 |	   7   (0)| 00:00:01 |
+|   5 |   VIEW			| index$_join$_002   |	   3 |	  33 |	   2   (0)| 00:00:01 |
+|*  6 |    HASH JOIN		|		     |	     |	     |		  |	     |
+|   7 |     INDEX FAST FULL SCAN| PK_MEAL_TYPES      |	   3 |	  33 |	   1   (0)| 00:00:01 |
+|   8 |     INDEX FAST FULL SCAN| UQ_MEAL_TYPES_NAME |	   3 |	  33 |	   1   (0)| 00:00:01 |
+----------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("MT"."MEAL_TYPE_ID"="ITEM_1")
+   4 - filter("ML"."MEAL_DATE"=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd
+	      hh24:mi:ss') AND TRUNC(INTERNAL_FUNCTION("MEAL_DATE"))=TO_DATE(' 2026-11-20
+	      00:00:00', 'syyyy-mm-dd hh24:mi:ss'))
+   6 - access(ROWID=ROWID)
+
+24 rows selected.
+
+----- IX1 BEFORE: actual run statistics (look at the Buffers column)
+
+MEAL		     MEALS_SERVED
+-------------------- ------------
+Breakfast		       12
+Dinner			       20
+Lunch			       15
+
+3 rows selected.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID	25up788ydn1xx, child number 0
+-------------------------------------
+SELECT /*+ GATHER_PLAN_STATISTICS IX1_BEFORE */ mt.name AS meal,
+COUNT(*) AS meals_served   FROM meal_log ml   JOIN meal_types mt ON
+mt.meal_type_id = ml.meal_type_id  WHERE ml.meal_date = DATE
+'2026-11-20'  GROUP BY mt.name
+
+Plan hash value: 2256334840
+
+-----------------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation		| Name		     | Starts | E-Rows | A-Rows |   A-Time   | Buffers |  OMem |  1Mem | Used-Mem |
+-----------------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT	|		     |	    1 |        |      3 |00:00:00.01 |	    31 |       |       |	  |
+|*  1 |  HASH JOIN		|		     |	    1 |      3 |      3 |00:00:00.01 |	    31 |  2078K|  2078K|  856K (0)|
+|   2 |   VIEW			| VW_GBF_7	     |	    1 |      3 |      3 |00:00:00.01 |	    24 |       |       |	  |
+|   3 |    HASH GROUP BY	|		     |	    1 |      3 |      3 |00:00:00.01 |	    24 |  1345K|  1345K|	  |
+|*  4 |     INDEX FAST FULL SCAN| UQ_MEAL_ONCE	     |	    1 |     47 |     47 |00:00:00.01 |	    24 |       |       |	  |
+|   5 |   VIEW			| index$_join$_002   |	    1 |      3 |      3 |00:00:00.01 |	     7 |       |       |	  |
+|*  6 |    HASH JOIN		|		     |	    1 |        |      3 |00:00:00.01 |	     7 |  1610K|  1610K|  762K (0)|
+|   7 |     INDEX FAST FULL SCAN| PK_MEAL_TYPES      |	    1 |      3 |      3 |00:00:00.01 |	     3 |       |       |	  |
+|   8 |     INDEX FAST FULL SCAN| UQ_MEAL_TYPES_NAME |	    1 |      3 |      3 |00:00:00.01 |	     4 |       |       |	  |
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("MT"."MEAL_TYPE_ID"="ITEM_1")
+   4 - filter(("ML"."MEAL_DATE"=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd hh24:mi:ss') AND
+	      TRUNC(INTERNAL_FUNCTION("MEAL_DATE"))=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd hh24:mi:ss')))
+   6 - access(ROWID=ROWID)
+
+
+31 rows selected.
+
+----- IX1: create the index
+
+Index created.
+
+
+PL/SQL procedure successfully completed.
+
+----- IX1 AFTER: EXPLAIN PLAN (expect INDEX RANGE SCAN on IX_MEAL_DATE_TYPE)
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 783880508
+
+----------------------------------------------------------------------------------------------
+| Id  | Operation		| Name		     | Rows  | Bytes | Cost (%CPU)| Time     |
+----------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT	|		     |	   3 |	  81 |	   4   (0)| 00:00:01 |
+|*  1 |  HASH JOIN		|		     |	   3 |	  81 |	   4   (0)| 00:00:01 |
+|   2 |   VIEW			| VW_GBF_7	     |	   3 |	  48 |	   2   (0)| 00:00:01 |
+|   3 |    HASH GROUP BY	|		     |	   3 |	  33 |	   2   (0)| 00:00:01 |
+|*  4 |     INDEX RANGE SCAN	| IX_MEAL_DATE_TYPE  |	  47 |	 517 |	   2   (0)| 00:00:01 |
+|   5 |   VIEW			| index$_join$_002   |	   3 |	  33 |	   2   (0)| 00:00:01 |
+|*  6 |    HASH JOIN		|		     |	     |	     |		  |	     |
+|   7 |     INDEX FAST FULL SCAN| PK_MEAL_TYPES      |	   3 |	  33 |	   1   (0)| 00:00:01 |
+|   8 |     INDEX FAST FULL SCAN| UQ_MEAL_TYPES_NAME |	   3 |	  33 |	   1   (0)| 00:00:01 |
+----------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("MT"."MEAL_TYPE_ID"="ITEM_1")
+   4 - access("ML"."MEAL_DATE"=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd
+	      hh24:mi:ss'))
+       filter(TRUNC(INTERNAL_FUNCTION("MEAL_DATE"))=TO_DATE(' 2026-11-20 00:00:00',
+	      'syyyy-mm-dd hh24:mi:ss'))
+   6 - access(ROWID=ROWID)
+
+25 rows selected.
+
+----- IX1 AFTER: actual run statistics
+
+MEAL		     MEALS_SERVED
+-------------------- ------------
+Breakfast		       12
+Dinner			       20
+Lunch			       15
+
+3 rows selected.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID	54k4qt04u64j4, child number 0
+-------------------------------------
+SELECT /*+ GATHER_PLAN_STATISTICS IX1_AFTER */ mt.name AS meal,
+COUNT(*) AS meals_served   FROM meal_log ml   JOIN meal_types mt ON
+mt.meal_type_id = ml.meal_type_id  WHERE ml.meal_date = DATE
+'2026-11-20'  GROUP BY mt.name
+
+Plan hash value: 783880508
+
+-----------------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation		| Name		     | Starts | E-Rows | A-Rows |   A-Time   | Buffers |  OMem |  1Mem | Used-Mem |
+-----------------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT	|		     |	    1 |        |      3 |00:00:00.01 |	    10 |       |       |	  |
+|*  1 |  HASH JOIN		|		     |	    1 |      3 |      3 |00:00:00.01 |	    10 |  2078K|  2078K|  903K (0)|
+|   2 |   VIEW			| VW_GBF_7	     |	    1 |      3 |      3 |00:00:00.01 |	     3 |       |       |	  |
+|   3 |    HASH GROUP BY	|		     |	    1 |      3 |      3 |00:00:00.01 |	     3 |  1345K|  1345K|	  |
+|*  4 |     INDEX RANGE SCAN	| IX_MEAL_DATE_TYPE  |	    1 |     47 |     47 |00:00:00.01 |	     3 |       |       |	  |
+|   5 |   VIEW			| index$_join$_002   |	    1 |      3 |      3 |00:00:00.01 |	     7 |       |       |	  |
+|*  6 |    HASH JOIN		|		     |	    1 |        |      3 |00:00:00.01 |	     7 |  1610K|  1610K|  729K (0)|
+|   7 |     INDEX FAST FULL SCAN| PK_MEAL_TYPES      |	    1 |      3 |      3 |00:00:00.01 |	     3 |       |       |	  |
+|   8 |     INDEX FAST FULL SCAN| UQ_MEAL_TYPES_NAME |	    1 |      3 |      3 |00:00:00.01 |	     4 |       |       |	  |
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("MT"."MEAL_TYPE_ID"="ITEM_1")
+   4 - access("ML"."MEAL_DATE"=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd hh24:mi:ss'))
+       filter(TRUNC(INTERNAL_FUNCTION("MEAL_DATE"))=TO_DATE(' 2026-11-20 00:00:00', 'syyyy-mm-dd hh24:mi:ss'))
+   6 - access(ROWID=ROWID)
+
+
+31 rows selected.
+
+
+=====================================================================
+IX2  students (UPPER(full_name))   function-based index
+Query: website search "ayesha" -> UPPER(full_name) LIKE 'AYESHA%'
+=====================================================================
+----- IX2 BEFORE: EXPLAIN PLAN (expect TABLE ACCESS FULL on STUDENTS)
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 4078133427
+
+------------------------------------------------------------------------------
+| Id  | Operation	  | Name     | Rows  | Bytes | Cost (%CPU)| Time     |
+------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |	     |	   2 |	  56 |	   3   (0)| 00:00:01 |
+|*  1 |  TABLE ACCESS FULL| STUDENTS |	   2 |	  56 |	   3   (0)| 00:00:01 |
+------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter(UPPER("FULL_NAME") LIKE 'AYESHA%')
+
+13 rows selected.
+
+----- IX2 BEFORE: actual run statistics
+
+STUDENT_ID ROLL_NO		FULL_NAME									 PROGRAM
+---------- -------------------- -------------------------------------------------------------------------------- ----------------------------------------
+	17 231017		Ayesha Noor									 BSIT
+
+1 row selected.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID	9dsk7by37j1xa, child number 0
+-------------------------------------
+SELECT /*+ GATHER_PLAN_STATISTICS IX2_BEFORE */ student_id, roll_no,
+full_name, program   FROM students  WHERE UPPER(full_name) LIKE
+'AYESHA%'
+
+Plan hash value: 4078133427
+
+----------------------------------------------------------------------------------------
+| Id  | Operation	  | Name     | Starts | E-Rows | A-Rows |   A-Time   | Buffers |
+----------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |	     |	    1 |        |      1 |00:00:00.01 |	     7 |
+|*  1 |  TABLE ACCESS FULL| STUDENTS |	    1 |      2 |      1 |00:00:00.01 |	     7 |
+----------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter(UPPER("FULL_NAME") LIKE 'AYESHA%')
+
+
+20 rows selected.
+
+----- IX2: create the function-based index
+
+Index created.
+
+
+PL/SQL procedure successfully completed.
+
+----- IX2 AFTER: EXPLAIN PLAN (expect INDEX RANGE SCAN on IX_STUDENTS_UPPER_NAME)
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 3963079216
+
+--------------------------------------------------------------------------------------------------------------
+| Id  | Operation			    | Name		     | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT		    |			     |	   1 |	  41 |	   2   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS BY INDEX ROWID BATCHED| STUDENTS		     |	   1 |	  41 |	   2   (0)| 00:00:01 |
+|*  2 |   INDEX RANGE SCAN		    | IX_STUDENTS_UPPER_NAME |	   1 |	     |	   1   (0)| 00:00:01 |
+--------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access(UPPER("FULL_NAME") LIKE 'AYESHA%')
+       filter(UPPER("FULL_NAME") LIKE 'AYESHA%')
+
+15 rows selected.
+
+----- IX2 AFTER: actual run statistics
+
+STUDENT_ID ROLL_NO		FULL_NAME									 PROGRAM
+---------- -------------------- -------------------------------------------------------------------------------- ----------------------------------------
+	17 231017		Ayesha Noor									 BSIT
+
+1 row selected.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID	85hbh2xq3brnt, child number 0
+-------------------------------------
+SELECT /*+ GATHER_PLAN_STATISTICS IX2_AFTER */ student_id, roll_no,
+full_name, program   FROM students  WHERE UPPER(full_name) LIKE
+'AYESHA%'
+
+Plan hash value: 3963079216
+
+------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation			    | Name		     | Starts | E-Rows | A-Rows |   A-Time   | Buffers |
+------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT		    |			     |	    1 |        |      1 |00:00:00.01 |	     3 |
+|   1 |  TABLE ACCESS BY INDEX ROWID BATCHED| STUDENTS		     |	    1 |      1 |      1 |00:00:00.01 |	     3 |
+|*  2 |   INDEX RANGE SCAN		    | IX_STUDENTS_UPPER_NAME |	    1 |      1 |      1 |00:00:00.01 |	     2 |
+------------------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("STUDENTS"."SYS_NC00010$" LIKE 'AYESHA%')
+       filter("STUDENTS"."SYS_NC00010$" LIKE 'AYESHA%')
+
+
+22 rows selected.
+
+----- IX2 counter-example: a LEADING wildcard cannot use the index (still a FULL scan)
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 4078133427
+
+--------------------------------------
+| Id  | Operation	  | Name     |
+--------------------------------------
+|   0 | SELECT STATEMENT  |	     |
+|*  1 |  TABLE ACCESS FULL| STUDENTS |
+--------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter(UPPER("FULL_NAME") LIKE '%ALI%')
+
+13 rows selected.
+
+
+===== The two tuning indexes now in the schema =====
+
+INDEX_NAME		 TABLE_NAME   INDEX_TYPE		  DISTINCT_KEYS LEAF_BLOCKS
+------------------------ ------------ --------------------------- ------------- -----------
+IX_MEAL_DATE_TYPE	 MEAL_LOG     NORMAL				    261 	 13
+IX_STUDENTS_UPPER_NAME	 STUDENTS     FUNCTION-BASED NORMAL		     30 	  1
+
+2 rows selected.
+
+13_indexes_and_plans.sql finished.

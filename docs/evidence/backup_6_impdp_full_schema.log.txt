@@ -1,0 +1,39 @@
+;;; 
+Import: Release 23.26.4.0.0 - Production on Fri Nov 27 09:12:42 2026
+Version 23.26.4.0.0
+
+Copyright (c) 1982, 2026, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle AI Database 26ai Free Release 23.26.4.0.0 - Develop, Learn, and Run for Free
+Master table "SYSTEM"."SYS_IMPORT_SCHEMA_01" successfully loaded/unloaded
+Starting "SYSTEM"."SYS_IMPORT_SCHEMA_01":  system/********@localhost/FREEPDB1 directory=HH_BACKUP_DIR dumpfile=hostelhub_backup.dmp logfile=hostelhub_import_full.log schemas=HOSTELHUB remap_schema=HOSTELHUB:HOSTELHUB_RESTORE 
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA/LOGREP
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+. . imported "HOSTELHUB_RESTORE"."MEAL_LOG"                143 KB    4213 rows
+. . imported "HOSTELHUB_RESTORE"."AUDIT_LOG"              14.4 KB      71 rows
+. . imported "HOSTELHUB_RESTORE"."INVOICES"                 14 KB      72 rows
+. . imported "HOSTELHUB_RESTORE"."STUDENTS"               11.8 KB      30 rows
+. . imported "HOSTELHUB_RESTORE"."ALLOCATIONS"            11.2 KB      26 rows
+. . imported "HOSTELHUB_RESTORE"."PAYMENTS"                9.7 KB      42 rows
+. . imported "HOSTELHUB_RESTORE"."HOSTEL_UNITS"            8.5 KB      22 rows
+. . imported "HOSTELHUB_RESTORE"."APP_USERS"               8.1 KB       3 rows
+. . imported "HOSTELHUB_RESTORE"."BEDS"                    7.3 KB      40 rows
+. . imported "HOSTELHUB_RESTORE"."ROOM_TYPES"              7.2 KB       4 rows
+. . imported "HOSTELHUB_RESTORE"."ACADEMIC_TERMS"          7.4 KB       3 rows
+. . imported "HOSTELHUB_RESTORE"."MEAL_TYPES"              6.6 KB       3 rows
+Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
+Processing object type SCHEMA_EXPORT/FUNCTION/FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/PROCEDURE
+Processing object type SCHEMA_EXPORT/FUNCTION/ALTER_FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/ALTER_PROCEDURE
+Processing object type SCHEMA_EXPORT/VIEW/VIEW
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/FUNCTIONAL_INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/FUNCTIONAL_INDEX/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/TRIGGER
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Job "SYSTEM"."SYS_IMPORT_SCHEMA_01" successfully completed at Fri Nov 27 09:13:10 2026 elapsed 0 00:00:26

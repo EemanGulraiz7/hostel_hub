@@ -1,7 +1,7 @@
 /* =====================================================================
    HostelHub | 00_run_all.sql
    ---------------------------------------------------------------------
-   Runs scripts 02 to 12 in the right order and writes everything to
+   Runs scripts 02 to 13 in the right order and writes everything to
    run_all.log (in the folder you started from), so you can send the log back when
    something fails.
 
@@ -41,6 +41,8 @@ PROMPT ===== 11 tests =====
 @@11_tests.sql
 PROMPT ===== 12 COMMIT / SAVEPOINT / ROLLBACK =====
 @@12_transaction_control.sql
+PROMPT ===== 13 indexes and query plans (before / after) =====
+@@13_indexes_and_plans.sql
 
 PROMPT ===== Invalid objects (should be "no rows selected") =====
 SELECT object_name, object_type FROM user_objects WHERE status = 'INVALID';
