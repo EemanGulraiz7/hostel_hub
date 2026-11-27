@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoices | HostelHub</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="invoices">
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="page-header">
+      <h1>Invoices</h1>
+      <span class="muted small" data-role="WARDEN">Wardens can view invoices. Billing and payments are done by the ADMIN.</span>
+    </div>
+    <div id="messages"></div>
+
+    <!-- ADMIN only: billing actions -->
+    <div class="grid grid-2" data-role="ADMIN">
+      <div class="card">
+        <h2>Generate invoices</h2>
+        <p class="muted small">Calls PL/SQL <code>pr_generate_invoice</code> (IN/OUT parameters): rent from the room type + mess charges from <code>fn_meal_charges</code>.</p>
+        <form id="genForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="genStudent">Student</label>
+              <select id="genStudent" name="student_id"><option value="">All residents</option></select>
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="genMonth">Billing month</label>
+              <input id="genMonth" name="month" type="month">
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="form-actions"><button class="btn" type="submit" id="genBtn">Generate</button></div>
+        </form>
+      </div>
+
+      <div class="card hidden" id="payCard">
+        <h2>Record payment <span class="muted small" id="payFor"></span></h2>
+        <p class="muted small">The AFTER trigger <code>trg_payment_audit</code> writes the audit row, updates the invoice status and rejects over-payments (ORA-20024).</p>
+        <form id="payForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="amount">Amount (Rs)</label>
+              <input id="amount" name="amount" type="number" min="1" step="0.01">
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="method">Method</label>
+              <select id="method" name="method"><option>CASH</option><option>BANK</option><option>CARD</option></select>
+              <span class="field-error"></span>
+            </div>
+            <div class="field full">
+              <label for="reference_no">Reference (optional)</label>
+              <input id="reference_no" name="reference_no" maxlength="40" placeholder="Receipt or transaction number">
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit" id="payBtn">Save payment</button>
+            <button class="btn btn-secondary" type="button" id="payCancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="card" id="payHint">
+        <h2>Record payment</h2>
+        <p class="muted">Click <b>Pay</b> next to an unpaid invoice below.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <form id="filterForm" class="filters">
+        <div class="field grow">
+          <label for="q">Student</label>
+          <input id="q" name="q" placeholder="Roll number or name" maxlength="50">
+        </div>
+        <div class="field">
+          <label for="fMonth">Month</label>
+          <select id="fMonth" name="month"><option value="">All months</option></select>
+        </div>
+        <div class="field">
+          <label for="fStatus">Status</label>
+          <select id="fStatus" name="status">
+            <option value="">All</option><option>UNPAID</option><option>PARTIAL</option><option>PAID</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">Filter</button>
+      </form>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Month</th><th>Roll no</th><th>Student</th><th class="num">Rent</th><th class="num">Mess</th>
+            <th class="num">Total</th><th class="num">Paid</th><th class="num">Balance</th><th>Status</th><th>Due</th><th></th></tr></thead>
+          <tbody id="rows"><tr><td colspan="12" class="empty">Loading...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pager" id="pager"></div>
+    </div>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/invoices.js"></script>
+</body>
+</html>

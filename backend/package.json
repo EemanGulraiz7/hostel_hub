@@ -1,0 +1,28 @@
+{
+  "name": "hostelhub-backend",
+  "version": "1.0.0",
+  "description": "HostelHub API: Node.js + Express backend for the Oracle and MongoDB databases (IT433 semester project, M3)",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed:mongo": "node src/seedMongo.js",
+    "test:api": "node tests/api_tests.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "chart.js": "^4.6.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.9.1",
+    "oracledb": "^26.0.0"
+  }
+}

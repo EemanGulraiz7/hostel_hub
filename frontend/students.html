@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Students | HostelHub</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="students">
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="page-header">
+      <h1>Students</h1>
+      <a class="btn" href="/student-form.html">+ Add student</a>
+    </div>
+    <div id="messages"></div>
+
+    <div class="card">
+      <form id="filterForm" class="filters">
+        <div class="field grow">
+          <label for="q">Search</label>
+          <input id="q" name="q" placeholder="Name, roll number, email or program" maxlength="50">
+        </div>
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="">All</option><option value="M">Male</option><option value="F">Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="status">Bed (current term)</label>
+          <select id="status" name="status">
+            <option value="">All</option><option value="ALLOCATED">Has a bed</option><option value="UNALLOCATED">No bed</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">Search</button>
+        <button class="btn btn-secondary" type="reset">Clear</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Roll no</th><th>Name</th><th>Gender</th><th>Program</th><th>Sem</th>
+                <th>Email</th><th>Bed</th><th class="num">Outstanding</th><th></th></tr>
+          </thead>
+          <tbody id="rows"><tr><td colspan="9" class="empty">Loading...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pager" id="pager"></div>
+    </div>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/students.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Allocate Bed | HostelHub</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="allocate">
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="page-header">
+      <div>
+        <h1>Allocate Bed</h1>
+        <span class="muted">Core transaction: calls Oracle PL/SQL <code>pr_allocate_bed</code> with a <code>client_request_id</code></span>
+      </div>
+    </div>
+    <div id="messages"></div>
+
+    <div class="grid grid-2">
+      <!-- The transaction form -->
+      <div class="card">
+        <h2>1. Choose student and bed</h2>
+        <form id="allocForm" novalidate>
+          <div class="field" style="margin-bottom:12px">
+            <label>Term</label>
+            <div id="termText" class="muted">Loading...</div>
+            <input type="hidden" name="term_id">
+            <span class="field-error"></span>
+          </div>
+          <div class="field" style="margin-bottom:12px">
+            <label for="student_id">Student (no bed this term) *</label>
+            <select id="student_id" name="student_id"></select>
+            <span class="field-error"></span>
+          </div>
+          <div class="field" style="margin-bottom:6px">
+            <label for="bed_id">Vacant bed *</label>
+            <select id="bed_id" name="bed_id"></select>
+            <span class="field-error"></span>
+          </div>
+          <label class="small muted" style="font-weight:normal;display:flex;gap:6px;align-items:center;margin-bottom:12px">
+            <input type="checkbox" id="showAllBeds" style="width:auto"> Show beds in every block (to test the gender rule, T13)
+          </label>
+
+          <div class="field" style="margin-bottom:6px">
+            <label>client_request_id</label>
+            <code id="requestIdText"></code>
+            <input type="hidden" name="client_request_id">
+            <span class="field-error"></span>
+          </div>
+          <p class="muted small" style="margin-top:0">Created by the browser once for this form. Retries send the SAME id, so Oracle never creates a second allocation.</p>
+
+          <div class="form-actions">
+            <button class="btn" type="submit" id="allocateBtn">Allocate bed</button>
+            <button class="btn btn-secondary" type="button" id="retryBtn" disabled>Send same request again</button>
+            <button class="btn btn-secondary" type="button" id="newBtn">Start new allocation</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Result of the last call -->
+      <div class="card result-box">
+        <h2>2. Result</h2>
+        <div id="result"><p class="muted">Submit the form to see the result here.</p></div>
+        <h3 style="margin-top:16px">Audit trail for this request ID</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>#</th><th>Action</th><th>Details</th><th>Time</th></tr></thead>
+          <tbody id="auditRows"><tr><td colspan="4" class="empty">-</td></tr></tbody>
+        </table></div>
+        <details style="margin-top:14px">
+          <summary class="small"><strong>How to test safe retries (T09 to T11)</strong></summary>
+          <ol class="small muted">
+            <li><b>T09 new request:</b> choose a student and bed, click <i>Allocate bed</i> &rarr; <b>CREATED</b>.</li>
+            <li><b>T10 identical retry:</b> click <i>Send same request again</i> &rarr; <b>REPLAYED</b>, same allocation id, no new audit row.</li>
+            <li><b>T11 conflicting retry:</b> pick a different bed (tick "show beds in every block" if needed) and click <i>Send same request again</i> &rarr; error <b>ORA-20010</b>; the first allocation is unchanged.</li>
+          </ol>
+        </details>
+      </div>
+    </div>
+
+    <!-- Current allocations -->
+    <div class="card">
+      <h2>Current allocations <span class="muted small" id="allocCount"></span></h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>#</th><th>Roll no</th><th>Student</th><th>Bed</th><th>Block</th><th>Room type</th><th class="num">Rent</th><th>Allocated</th><th>By</th><th></th></tr></thead>
+        <tbody id="allocRows"><tr><td colspan="10" class="empty">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/allocate.js"></script>
+</body>
+</html>
