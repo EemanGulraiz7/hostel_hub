@@ -1,0 +1,23 @@
+===== Row count per table =====
+TABLE_NAME	  ROW_COUNT
+---------------- ----------
+APP_USERS		  3
+STUDENTS		 30
+ROOM_TYPES		  4
+HOSTEL_UNITS		 22
+BEDS			 40
+ACADEMIC_TERMS		  3
+ALLOCATIONS		 26
+MEAL_TYPES		  3
+MEAL_LOG	       4213
+INVOICES		 72
+PAYMENTS		 42
+AUDIT_LOG		 71
+===== Business totals =====
+CHECK_NAME			   VALUE
+---------------------------------- --------------------
+Total billed (invoices) 	   1,521,940.00
+Total received (payments)	   842,610.00
+Total outstanding (v_student_dues) 679,330.00
+Invalid objects 		   0
+Checked at			   27-NOV-26 09:11:07

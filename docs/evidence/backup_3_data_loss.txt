@@ -1,0 +1,35 @@
+===== Payments before the mistake =====
+
+  PAYMENTS TOTAL_RECEIVED
+---------- --------------
+	42	   842610
+
+1 row selected.
+
+===== The mistake: every payment deleted, then COMMIT =====
+
+42 rows deleted.
+
+
+Commit complete.
+
+===== ROLLBACK now does nothing: the delete is already committed =====
+
+Rollback complete.
+
+
+  PAYMENTS TOTAL_RECEIVED
+---------- --------------
+	 0
+
+1 row selected.
+
+===== Effect on the business: every student now looks unpaid =====
+
+TOTAL_PAID TOTAL_OUTSTANDING
+---------- -----------------
+	 0	     1521940
+
+1 row selected.
+
+Data lost. Now restore PAYMENTS from the dump file with impdp (step 4 of docs/backup_restore.md).

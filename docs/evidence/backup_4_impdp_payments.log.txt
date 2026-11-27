@@ -1,0 +1,20 @@
+;;; 
+Import: Release 23.26.4.0.0 - Production on Fri Nov 27 09:11:44 2026
+Version 23.26.4.0.0
+
+Copyright (c) 1982, 2026, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle AI Database 26ai Free Release 23.26.4.0.0 - Develop, Learn, and Run for Free
+Master table "HOSTELHUB"."SYS_IMPORT_TABLE_01" successfully loaded/unloaded
+Starting "HOSTELHUB"."SYS_IMPORT_TABLE_01":  hostelhub/********@localhost/FREEPDB1 directory=HH_BACKUP_DIR dumpfile=hostelhub_backup.dmp logfile=hostelhub_import_payments.log tables=PAYMENTS table_exists_action=REPLACE 
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+. . imported "HOSTELHUB"."PAYMENTS"                        9.7 KB      42 rows
+Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/TRIGGER
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Job "HOSTELHUB"."SYS_IMPORT_TABLE_01" successfully completed at Fri Nov 27 09:12:05 2026 elapsed 0 00:00:19

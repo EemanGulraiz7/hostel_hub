@@ -14,7 +14,7 @@ HostelHub lets hostel staff allocate beds to students each term, log daily meals
 
 ```
 database/              Oracle scripts, numbered in run order
-  00_run_all.sql       runs 02 to 12 and saves the output to run_all.log
+  00_run_all.sql       runs 02 to 13 and saves the output to run_all.log
   01_create_user.sql   run ONCE as SYSTEM: creates the HOSTELHUB schema
   02_schema.sql        12 tables with PK, FK, UNIQUE, NOT NULL, CHECK
   03_functions.sql     fn_occupancy_pct, fn_occupancy_band, fn_outstanding_balance, fn_meal_charges
@@ -27,8 +27,18 @@ database/              Oracle scripts, numbered in run order
   10_analytics.sql     running total, moving average, ranking, LAG/LEAD
   11_tests.sql         T01-T04 and T09-T11 with Input / Expected / Actual / PASS-FAIL
   12_transaction_control.sql  COMMIT, SAVEPOINT, ROLLBACK
+  13_indexes_and_plans.sql    2 tuning indexes with DBMS_XPLAN before/after plans
+  14_backup_setup.sql         run ONCE as SYSTEM: Data Pump directory for backups
+  15_backup_check.sql         row counts and totals, before/after a restore
+  16_simulate_data_loss.sql   backup exercise only: deletes payments and commits
 docs/
   data_dictionary.md   every table, column and constraint (for the report)
+  backup_restore.md    step-by-step Data Pump backup and restore exercise
+  apex_report.md       APEX Vacant Beds report, step by step
+  ha_rac_design.md     HA/RAC design, RPO/RTO (diagram: ha_rac_diagram.png / .svg)
+  test_cases.md        test table T01 to T13 (database rows filled, web rows to fill)
+  report_outline.md    8 to 12 page report plan and ZIP layout
+  evidence/            real outputs from the test run (plans, backup logs)
 ```
 
 ## How to run the database scripts (on your own computer)
@@ -47,7 +57,7 @@ You need **Oracle Database 23ai Free** (or 21c XE) and **SQL Developer** (or SQL
 
 1. Create a second connection: user `hostelhub`, password `Hostel_Hub_2026`, same host, port and service name.
 2. Open `database/00_run_all.sql` with that connection and press **F5**.
-   It runs scripts 02 to 12 in order and writes the output to `run_all.log`.
+   It runs scripts 02 to 13 in order and writes the output to `run_all.log`.
 3. Check the end of the output:
    - the test block prints `PASSED: 19   FAILED: 0`
    - the invalid-objects query prints `no rows selected`
@@ -60,7 +70,7 @@ sql hostelhub/Hostel_Hub_2026@localhost:1521/FREEPDB1   # or: sqlplus ...
 SQL> @00_run_all.sql
 ```
 
-You can also run the files one by one in number order (02 to 12). The whole set is re-runnable: `02_schema.sql` drops and recreates every table, so running `00_run_all.sql` again always gives the same clean data.
+You can also run the files one by one in number order (02 to 13). The whole set is re-runnable: `02_schema.sql` drops and recreates every table, so running `00_run_all.sql` again always gives the same clean data.
 
 > If something fails, send back `run_all.log` (or a screenshot of the first error).
 
@@ -105,6 +115,11 @@ The bed row is locked with `SELECT ... FOR UPDATE`, and the request ID is checke
 | 4 analytical reports | `10_analytics.sql` A1 to A4 (+ view `v_mess_daily_revenue` for the dashboard) |
 | Retry-safe transaction with `client_request_id` | `pr_allocate_bed`, tests T09 to T11 |
 | COMMIT / SAVEPOINT / ROLLBACK | `12_transaction_control.sql` |
+| 2 indexes + before/after plan | `13_indexes_and_plans.sql`, results in `docs/evidence/` |
+| Logical backup / restore | `14` to `16` + `docs/backup_restore.md` (Data Pump) |
+| APEX report | `docs/apex_report.md` (Interactive Report on `v_vacant_beds`) |
+| HA / RAC diagram, RPO / RTO | `docs/ha_rac_design.md`, `docs/ha_rac_diagram.png` |
+| Test table T01 to T13 | `docs/test_cases.md` |
 
 ### Custom error codes (the backend maps these to messages)
 
@@ -131,7 +146,7 @@ The bed row is locked with `SELECT ... FOR UPDATE`, and the request ID is checke
 - **M1** Proposal, ERD, 3NF, core transaction design (done)
 - **M2** Oracle database: this folder (done)
 - **M3** Node.js + Express API (node-oracledb, bind variables), frontend screens, login with two roles, MongoDB complaints module
-- **M4** Indexes with before/after `DBMS_XPLAN`, Data Pump backup/restore, APEX report, HA/RAC diagram, test table, report and ZIP
+- **M4** Indexes with before/after `DBMS_XPLAN`, Data Pump backup/restore, APEX report, HA/RAC diagram, test table (done in this repo); report and ZIP (outline in `docs/report_outline.md`)
 
 ## Note on dates
 

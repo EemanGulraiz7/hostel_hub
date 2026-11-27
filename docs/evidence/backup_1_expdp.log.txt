@@ -1,0 +1,43 @@
+;;; 
+Export: Release 23.26.4.0.0 - Production on Fri Nov 27 09:11:07 2026
+Version 23.26.4.0.0
+
+Copyright (c) 1982, 2026, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle AI Database 26ai Free Release 23.26.4.0.0 - Develop, Learn, and Run for Free
+Starting "HOSTELHUB"."SYS_EXPORT_SCHEMA_01":  hostelhub/********@localhost/FREEPDB1 schemas=HOSTELHUB directory=HH_BACKUP_DIR dumpfile=hostelhub_backup.dmp logfile=hostelhub_export.log reuse_dumpfiles=YES 
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/FUNCTIONAL_INDEX/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA/LOGREP
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/COMMENT
+Processing object type SCHEMA_EXPORT/TABLE/IDENTITY_COLUMN
+Processing object type SCHEMA_EXPORT/FUNCTION/FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/PROCEDURE
+Processing object type SCHEMA_EXPORT/FUNCTION/ALTER_FUNCTION
+Processing object type SCHEMA_EXPORT/PROCEDURE/ALTER_PROCEDURE
+Processing object type SCHEMA_EXPORT/VIEW/VIEW
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/FUNCTIONAL_INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/TRIGGER
+. . exported "HOSTELHUB"."MEAL_LOG"                        143 KB    4213 rows
+. . exported "HOSTELHUB"."AUDIT_LOG"                      14.4 KB      71 rows
+. . exported "HOSTELHUB"."INVOICES"                         14 KB      72 rows
+. . exported "HOSTELHUB"."STUDENTS"                       11.8 KB      30 rows
+. . exported "HOSTELHUB"."ALLOCATIONS"                    11.2 KB      26 rows
+. . exported "HOSTELHUB"."PAYMENTS"                        9.7 KB      42 rows
+. . exported "HOSTELHUB"."HOSTEL_UNITS"                    8.5 KB      22 rows
+. . exported "HOSTELHUB"."APP_USERS"                       8.1 KB       3 rows
+. . exported "HOSTELHUB"."BEDS"                            7.3 KB      40 rows
+. . exported "HOSTELHUB"."ROOM_TYPES"                      7.2 KB       4 rows
+. . exported "HOSTELHUB"."ACADEMIC_TERMS"                  7.4 KB       3 rows
+. . exported "HOSTELHUB"."MEAL_TYPES"                      6.6 KB       3 rows
+Master table "HOSTELHUB"."SYS_EXPORT_SCHEMA_01" successfully loaded/unloaded
+******************************************************************************
+Dump file set for HOSTELHUB.SYS_EXPORT_SCHEMA_01 is:
+  /opt/oracle/backup/hostelhub_backup.dmp
+Job "HOSTELHUB"."SYS_EXPORT_SCHEMA_01" successfully completed at Fri Nov 27 09:11:42 2026 elapsed 0 00:00:33

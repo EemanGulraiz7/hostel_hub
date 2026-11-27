@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123 794" width="1123" height="794" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#15803d"/>
+    </marker>
+    <style>
+      .t  { font-size: 13px; fill: #0f172a; }
+      .s  { font-size: 11px; fill: #334155; }
+      .h  { font-size: 14px; font-weight: 700; fill: #0f172a; }
+      .site { font-size: 13px; font-weight: 700; fill: #475569; letter-spacing: .5px; }
+      .box { fill: #ffffff; stroke: #64748b; stroke-width: 1.4; rx: 8; }
+      .db  { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 1.6; rx: 8; }
+      .sb  { fill: #f0fdf4; stroke: #15803d; stroke-width: 1.6; rx: 8; }
+      .st  { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.2; rx: 6; }
+      .ln  { stroke: #334155; stroke-width: 1.6; fill: none; }
+      .lnB { stroke: #1d4ed8; stroke-width: 1.8; fill: none; }
+      .lnG { stroke: #15803d; stroke-width: 2.2; fill: none; }
+      .dash { stroke-dasharray: 6 4; }
+      th, td { }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1123" height="794" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="30" y="38" style="font-size:20px;font-weight:700;fill:#0f172a">HostelHub: high availability design (2-node RAC primary + Data Guard standby)</text>
+  <text x="30" y="60" class="s">IT433 semester project, design only (no real cluster required). Oracle 23ai / 19c Enterprise features: RAC, ASM, Active Data Guard, Fast-Start Failover.</text>
+
+  <!-- ================= CLIENT TIER ================= -->
+  <text x="30" y="92" class="site">CLIENTS AND APPLICATION TIER</text>
+
+  <rect x="30" y="102" width="220" height="56" class="box"/>
+  <text x="140" y="125" text-anchor="middle" class="t" font-weight="600">Browsers (Admin, Warden)</text>
+  <text x="140" y="143" text-anchor="middle" class="s">HTTPS, never connect to a database</text>
+
+  <line x1="140" y1="158" x2="140" y2="196" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="30" y="198" width="220" height="124" class="box"/>
+  <text x="140" y="220" text-anchor="middle" class="t" font-weight="600">Load balancer</text>
+  <line x1="44" y1="230" x2="236" y2="230" stroke="#cbd5e1"/>
+  <text x="140" y="250" text-anchor="middle" class="t" font-weight="600">Node.js + Express API x 2</text>
+  <text x="140" y="268" text-anchor="middle" class="s">node-oracledb connection pool</text>
+  <text x="140" y="284" text-anchor="middle" class="s">connects to SCAN + service name</text>
+  <text x="140" y="300" text-anchor="middle" class="s">FAN events, Application Continuity</text>
+  <text x="140" y="316" text-anchor="middle" class="s">client_request_id makes retries safe</text>
+
+  <rect x="30" y="372" width="220" height="74" class="box"/>
+  <text x="140" y="394" text-anchor="middle" class="t" font-weight="600">MongoDB replica set (3 members)</text>
+  <text x="140" y="412" text-anchor="middle" class="s">complaints collection</text>
+  <text x="140" y="428" text-anchor="middle" class="s">automatic primary election</text>
+  <line x1="140" y1="322" x2="140" y2="370" class="ln" marker-end="url(#arr)"/>
+
+  <!-- ================= PRIMARY SITE ================= -->
+  <rect x="285" y="78" width="430" height="400" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4" rx="12"/>
+  <text x="300" y="98" class="site">PRIMARY SITE: CAMPUS DATA CENTRE (READ/WRITE)</text>
+
+  <rect x="305" y="110" width="390" height="44" class="box"/>
+  <text x="500" y="129" text-anchor="middle" class="t" font-weight="600">SCAN listener  hostelhub-scan:1521  (3 virtual IPs)</text>
+  <text x="500" y="146" text-anchor="middle" class="s">service HOSTELHUB_RW runs on both instances; clients follow it after a failure</text>
+
+  <!-- API to SCAN -->
+  <path d="M250,250 L275,250 L275,132 L303,132" class="ln" marker-end="url(#arr)"/>
+
+  <rect x="305" y="186" width="175" height="112" class="db"/>
+  <text x="392" y="208" text-anchor="middle" class="h">RAC node 1</text>
+  <text x="392" y="228" text-anchor="middle" class="s">instance HHUB1</text>
+  <text x="392" y="246" text-anchor="middle" class="s">own SGA, background</text>
+  <text x="392" y="262" text-anchor="middle" class="s">processes, redo thread 1</text>
+  <text x="392" y="284" text-anchor="middle" class="s">VIP 10.0.1.11</text>
+
+  <rect x="520" y="186" width="175" height="112" class="db"/>
+  <text x="607" y="208" text-anchor="middle" class="h">RAC node 2</text>
+  <text x="607" y="228" text-anchor="middle" class="s">instance HHUB2</text>
+  <text x="607" y="246" text-anchor="middle" class="s">own SGA, background</text>
+  <text x="607" y="262" text-anchor="middle" class="s">processes, redo thread 2</text>
+  <text x="607" y="284" text-anchor="middle" class="s">VIP 10.0.1.12</text>
+
+  <line x1="392" y1="154" x2="392" y2="184" class="ln" marker-end="url(#arr)"/>
+  <line x1="607" y1="154" x2="607" y2="184" class="ln" marker-end="url(#arr)"/>
+
+  <!-- interconnect -->
+  <line x1="480" y1="232" x2="520" y2="232" stroke="#b45309" stroke-width="3"/>
+  <line x1="480" y1="250" x2="520" y2="250" stroke="#b45309" stroke-width="3"/>
+  <text x="500" y="320" text-anchor="middle" class="s" fill="#b45309">interconnect (Cache Fusion)</text>
+  <line x1="500" y1="252" x2="500" y2="308" stroke="#b45309" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <line x1="392" y1="298" x2="392" y2="344" class="lnB" marker-end="url(#arrB)"/>
+  <line x1="607" y1="298" x2="607" y2="344" class="lnB" marker-end="url(#arrB)"/>
+
+  <rect x="305" y="346" width="390" height="70" class="st"/>
+  <text x="500" y="368" text-anchor="middle" class="t" font-weight="600">Shared storage (ASM, mirrored disks)</text>
+  <text x="500" y="386" text-anchor="middle" class="s">one database: datafiles, control files, online redo logs</text>
+  <text x="500" y="402" text-anchor="middle" class="s">Fast Recovery Area: archived redo, RMAN backups, flashback logs</text>
+
+  <rect x="305" y="426" width="390" height="40" class="box"/>
+  <text x="500" y="443" text-anchor="middle" class="s">Nightly Data Pump export of HOSTELHUB (02:00), copied off-site, kept 14 days</text>
+  <text x="500" y="458" text-anchor="middle" class="s">Weekly RMAN level 0 + daily level 1 backups</text>
+
+  <!-- ================= STANDBY SITE ================= -->
+  <rect x="760" y="78" width="335" height="400" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="5 4" rx="12"/>
+  <text x="775" y="98" class="site">STANDBY SITE: SECOND BUILDING / CLOUD</text>
+
+  <rect x="780" y="110" width="295" height="44" class="box"/>
+  <text x="927" y="129" text-anchor="middle" class="t" font-weight="600">Fast-Start Failover observer</text>
+  <text x="927" y="146" text-anchor="middle" class="s">third machine; starts failover if primary is lost</text>
+
+  <rect x="780" y="186" width="295" height="112" class="sb"/>
+  <text x="927" y="208" text-anchor="middle" class="h">Physical standby HHUB_STBY</text>
+  <text x="927" y="228" text-anchor="middle" class="s">Active Data Guard: open read-only</text>
+  <text x="927" y="246" text-anchor="middle" class="s">applies redo continuously (real-time apply)</text>
+  <text x="927" y="264" text-anchor="middle" class="s">serves service HOSTELHUB_RO:</text>
+  <text x="927" y="280" text-anchor="middle" class="s">analytics reports, APEX report, backups</text>
+
+  <rect x="780" y="346" width="295" height="70" class="st"/>
+  <text x="927" y="368" text-anchor="middle" class="t" font-weight="600">Standby storage (own copy)</text>
+  <text x="927" y="386" text-anchor="middle" class="s">full copy of the database; standby redo logs</text>
+  <text x="927" y="402" text-anchor="middle" class="s">becomes the primary after failover</text>
+  <line x1="927" y1="298" x2="927" y2="344" class="lnG" stroke-width="1.6" marker-end="url(#arrG)"/>
+  <line x1="927" y1="154" x2="927" y2="184" class="ln dash"/>
+
+  <!-- redo transport -->
+  <path d="M695,232 L778,232" class="lnG" marker-end="url(#arrG)"/>
+  <text x="737" y="222" text-anchor="middle" class="s" fill="#15803d" font-weight="700">redo</text>
+  <path d="M695,262 L778,262" class="lnG" marker-end="url(#arrG)"/>
+  <text x="737" y="282" text-anchor="middle" class="s" fill="#15803d">SYNC</text>
+
+  <!-- read-only reports path -->
+  <path d="M250,300 L268,300 L268,502 L927,502 L927,418" class="lnB dash" marker-end="url(#arrB)"/>
+  <text x="600" y="496" text-anchor="middle" class="s" fill="#1d4ed8">read-only reports use service HOSTELHUB_RO on the standby (keeps load off the primary)</text>
+
+  <!-- ================= RPO / RTO ================= -->
+  <text x="30" y="530" class="site">FAILURE SCENARIOS, RPO AND RTO (TARGETS)</text>
+  <g font-size="12">
+    <rect x="30" y="540" width="690" height="26" fill="#e2e8f0"/>
+    <text x="40"  y="558" font-weight="700" fill="#0f172a">Failure</text>
+    <text x="250" y="558" font-weight="700" fill="#0f172a">What takes over</text>
+    <text x="545" y="558" font-weight="700" fill="#0f172a">RPO</text>
+    <text x="625" y="558" font-weight="700" fill="#0f172a">RTO</text>
+
+    <rect x="30" y="566" width="690" height="30" fill="#ffffff"/>
+    <text x="40"  y="586" fill="#0f172a">One RAC node / instance crashes</text>
+    <text x="250" y="586" fill="#334155">Surviving node keeps the service; pool reconnects</text>
+    <text x="545" y="586" fill="#0f172a">0</text>
+    <text x="625" y="586" fill="#0f172a">&lt; 1 min</text>
+
+    <rect x="30" y="596" width="690" height="30" fill="#f8fafc"/>
+    <text x="40"  y="616" fill="#0f172a">Planned patching (rolling)</text>
+    <text x="250" y="616" fill="#334155">Patch one node at a time, service stays up</text>
+    <text x="545" y="616" fill="#0f172a">0</text>
+    <text x="625" y="616" fill="#0f172a">0 (no outage)</text>
+
+    <rect x="30" y="626" width="690" height="30" fill="#ffffff"/>
+    <text x="40"  y="646" fill="#0f172a">Whole primary site lost</text>
+    <text x="250" y="646" fill="#334155">Fast-Start Failover to standby; API follows service</text>
+    <text x="545" y="646" fill="#0f172a">0 (SYNC)</text>
+    <text x="625" y="646" fill="#0f172a">&lt; 5 min</text>
+
+    <rect x="30" y="656" width="690" height="30" fill="#f8fafc"/>
+    <text x="40"  y="676" fill="#0f172a">Storage corruption</text>
+    <text x="250" y="676" fill="#334155">Standby copy (auto block repair) or RMAN restore</text>
+    <text x="545" y="676" fill="#0f172a">0</text>
+    <text x="625" y="676" fill="#0f172a">&lt; 30 min</text>
+
+    <rect x="30" y="686" width="690" height="30" fill="#ffffff"/>
+    <text x="40"  y="706" fill="#0f172a">Committed user error</text>
+    <text x="250" y="706" fill="#334155">Flashback Query/Table, else Data Pump import</text>
+    <text x="545" y="706" fill="#0f172a">min / 24 h</text>
+    <text x="625" y="706" fill="#0f172a">&lt; 30 min</text>
+    <rect x="30" y="540" width="690" height="176" fill="none" stroke="#94a3b8"/>
+  </g>
+
+  <!-- ================= ASSUMPTIONS ================= -->
+  <text x="760" y="530" class="site">ASSUMPTIONS</text>
+  <g class="s" font-size="11.5">
+    <text x="760" y="552">- One hostel office, about 500 residents, 5 to 10 staff</text>
+    <text x="760" y="570">  users; peak load at allocation week and month-end billing.</text>
+    <text x="760" y="590">- Data Guard in Maximum Availability mode (SYNC redo):</text>
+    <text x="760" y="608">  a commit is confirmed only after the standby has the redo,</text>
+    <text x="760" y="626">  so no committed allocation or payment is lost (RPO 0).</text>
+    <text x="760" y="646">- Sites under 50 km apart, so SYNC adds only a few ms.</text>
+    <text x="760" y="666">- RTO includes the API pool reconnecting through FAN.</text>
+    <text x="760" y="686">- A retried request after failover is safe: Oracle's UNIQUE</text>
+    <text x="760" y="704">  client_request_id returns REPLAYED, never a duplicate.</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="11">
+    <line x1="30" y1="752" x2="60" y2="752" class="ln" marker-end="url(#arr)"/><text x="66" y="756" fill="#334155">client / SQL connection</text>
+    <line x1="210" y1="752" x2="240" y2="752" class="lnG" marker-end="url(#arrG)"/><text x="246" y="756" fill="#334155">redo shipping (Data Guard)</text>
+    <line x1="410" y1="752" x2="440" y2="752" class="lnB dash" marker-end="url(#arrB)"/><text x="446" y="756" fill="#334155">read-only reporting connection</text>
+    <line x1="630" y1="749" x2="660" y2="749" stroke="#b45309" stroke-width="3"/><text x="666" y="756" fill="#334155">RAC private interconnect</text>
+    <text x="30" y="780" fill="#64748b">RPO = how much committed data may be lost. RTO = how long until users can work again.</text>
+  </g>
+</svg>
