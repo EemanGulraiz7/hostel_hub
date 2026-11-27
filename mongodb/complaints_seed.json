@@ -1,0 +1,970 @@
+[
+  {
+    "complaint_no": "CMP-0001",
+    "student": {
+      "student_id": 1,
+      "roll_no": "231001",
+      "full_name": "Ahmed Khan",
+      "block_code": "A",
+      "room_code": "A101",
+      "bed_code": "A101-A"
+    },
+    "category": "ELECTRICAL",
+    "priority": "HIGH",
+    "title": "Ceiling fan not working",
+    "description": "The ceiling fan in my room stopped working two days ago and the room gets very hot at night.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-05T09:00:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-05T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-06T05:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-09-07T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-09-07T09:00:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0002",
+    "student": {
+      "student_id": 2,
+      "roll_no": "231002",
+      "full_name": "Bilal Hussain",
+      "block_code": "A",
+      "room_code": "A102",
+      "bed_code": "A102-A"
+    },
+    "category": "PLUMBING",
+    "priority": "HIGH",
+    "title": "Washroom tap leaking",
+    "description": "The tap in the shared washroom on the first floor leaks all the time and the floor stays wet.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-09T00:24:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-09T00:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-09T20:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-09-12T00:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-09-12T00:24:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0003",
+    "student": {
+      "student_id": 17,
+      "roll_no": "231017",
+      "full_name": "Ayesha Noor",
+      "block_code": "B",
+      "room_code": "B101",
+      "bed_code": "B101-A"
+    },
+    "category": "MESS_FOOD",
+    "priority": "MEDIUM",
+    "title": "Breakfast served cold",
+    "description": "Eggs and paratha at breakfast have been cold for the whole week. Please ask the mess staff to serve them hot.",
+    "status": "IN_PROGRESS",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-12T15:48:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-12T15:48:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-13T11:48:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0004",
+    "student": {
+      "student_id": 4,
+      "roll_no": "231004",
+      "full_name": "Hamza Ali",
+      "block_code": "A",
+      "room_code": "A103",
+      "bed_code": "A103-A"
+    },
+    "category": "INTERNET",
+    "priority": "MEDIUM",
+    "title": "Wi-Fi drops every evening",
+    "description": "The hostel Wi-Fi disconnects between 8 pm and 11 pm almost every day, which makes online assignments hard.",
+    "status": "IN_PROGRESS",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-16T07:12:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-16T07:12:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-17T03:12:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0005",
+    "student": {
+      "student_id": 18,
+      "roll_no": "231018",
+      "full_name": "Fatima Zahra",
+      "block_code": "B",
+      "room_code": "B102",
+      "bed_code": "B102-A"
+    },
+    "category": "FURNITURE",
+    "priority": "LOW",
+    "title": "Broken study chair",
+    "description": "The study chair in room B102 has a broken leg and is not safe to sit on.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-19T22:36:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-19T22:36:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0006",
+    "student": {
+      "student_id": 5,
+      "roll_no": "231005",
+      "full_name": "Fahad Iqbal",
+      "block_code": "A",
+      "room_code": "A103",
+      "bed_code": "A103-B"
+    },
+    "category": "CLEANLINESS",
+    "priority": "MEDIUM",
+    "title": "Corridor not swept",
+    "description": "The first floor corridor of Block A was not swept for three days and dust is collecting near the stairs.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-23T09:00:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-23T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-24T05:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-09-27T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-09-27T09:00:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0007",
+    "student": {
+      "student_id": 20,
+      "roll_no": "231020",
+      "full_name": "Maryam Javed",
+      "block_code": "B",
+      "room_code": "B103",
+      "bed_code": "B103-A"
+    },
+    "category": "ELECTRICAL",
+    "priority": "HIGH",
+    "title": "Socket sparking",
+    "description": "One wall socket in room B103 gives sparks when a charger is plugged in. It looks dangerous.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-27T00:24:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-27T00:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-09-27T20:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-09-29T00:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-09-29T00:24:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0008",
+    "student": {
+      "student_id": 6,
+      "roll_no": "231006",
+      "full_name": "Saad Ahmed",
+      "block_code": "A",
+      "room_code": "A103",
+      "bed_code": "A103-C"
+    },
+    "category": "MESS_FOOD",
+    "priority": "LOW",
+    "title": "Request for more fruit",
+    "description": "Students would like fruit to be served with lunch at least twice a week.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-09-30T15:48:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-09-30T15:48:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0009",
+    "student": {
+      "student_id": 21,
+      "roll_no": "231021",
+      "full_name": "Sana Mirza",
+      "block_code": "B",
+      "room_code": "B103",
+      "bed_code": "B103-B"
+    },
+    "category": "SECURITY",
+    "priority": "HIGH",
+    "title": "Main gate lock broken",
+    "description": "The lock of the Block B main gate does not close properly at night.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-04T07:12:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-04T07:12:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-10-05T03:12:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-10-08T07:12:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-10-08T07:12:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0010",
+    "student": {
+      "student_id": 7,
+      "roll_no": "231007",
+      "full_name": "Zain Malik",
+      "block_code": "A",
+      "room_code": "A104",
+      "bed_code": "A104-A"
+    },
+    "category": "PLUMBING",
+    "priority": "MEDIUM",
+    "title": "No hot water in the morning",
+    "description": "The geyser on the first floor does not give hot water before 7 am during exam days.",
+    "status": "IN_PROGRESS",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-07T22:36:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-07T22:36:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-10-08T18:36:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0011",
+    "student": {
+      "student_id": 22,
+      "roll_no": "231022",
+      "full_name": "Iqra Shah",
+      "block_code": "B",
+      "room_code": "B103",
+      "bed_code": "B103-C"
+    },
+    "category": "INTERNET",
+    "priority": "LOW",
+    "title": "Weak signal in room B103",
+    "description": "Wi-Fi signal is very weak inside room B103; it works only in the corridor.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-11T09:00:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-11T09:00:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0012",
+    "student": {
+      "student_id": 9,
+      "roll_no": "231009",
+      "full_name": "Hassan Raza",
+      "block_code": "A",
+      "room_code": "A104",
+      "bed_code": "A104-C"
+    },
+    "category": "FURNITURE",
+    "priority": "MEDIUM",
+    "title": "Cupboard door hinge broken",
+    "description": "The cupboard door hinge in A104 came off and the door does not close, so belongings are not secure.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-15T00:24:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-15T00:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-10-15T20:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-10-19T00:24:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-10-19T00:24:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0013",
+    "student": {
+      "student_id": 23,
+      "roll_no": "231023",
+      "full_name": "Amna Qureshi",
+      "block_code": "B",
+      "room_code": "B104",
+      "bed_code": "B104-A"
+    },
+    "category": "CLEANLINESS",
+    "priority": "MEDIUM",
+    "title": "Dustbins not emptied",
+    "description": "The dustbins near room B104 are overflowing and were not emptied for two days.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-18T15:48:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-18T15:48:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-10-19T11:48:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-10-20T15:48:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-10-20T15:48:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0014",
+    "student": {
+      "student_id": 10,
+      "roll_no": "231010",
+      "full_name": "Omar Farooq",
+      "block_code": "A",
+      "room_code": "A201",
+      "bed_code": "A201-A"
+    },
+    "category": "ELECTRICAL",
+    "priority": "MEDIUM",
+    "title": "Tube light flickering",
+    "description": "The tube light in room A201 keeps flickering and makes it hard to study at night.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-22T07:12:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-22T07:12:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0015",
+    "student": {
+      "student_id": 24,
+      "roll_no": "231024",
+      "full_name": "Mahnoor Abbas",
+      "block_code": "B",
+      "room_code": "B104",
+      "bed_code": "B104-B"
+    },
+    "category": "MESS_FOOD",
+    "priority": "HIGH",
+    "title": "Hair found in dinner",
+    "description": "A hair was found in the dinner curry on Monday. Please check kitchen hygiene and staff caps.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-25T22:36:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-25T22:36:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-10-26T18:36:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-10-29T22:36:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-10-29T22:36:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0016",
+    "student": {
+      "student_id": 11,
+      "roll_no": "231011",
+      "full_name": "Ali Haider",
+      "block_code": "A",
+      "room_code": "A202",
+      "bed_code": "A202-A"
+    },
+    "category": "OTHER",
+    "priority": "LOW",
+    "title": "Request for a notice board",
+    "description": "A notice board on the second floor would help students see mess timings and announcements.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-10-29T09:00:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-10-29T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0017",
+    "student": {
+      "student_id": 19,
+      "roll_no": "231019",
+      "full_name": "Hira Aslam",
+      "block_code": "B",
+      "room_code": "B102",
+      "bed_code": "B102-B"
+    },
+    "category": "PLUMBING",
+    "priority": "HIGH",
+    "title": "Blocked drain in washroom",
+    "description": "The washroom drain on the first floor of Block B is blocked and water is collecting.",
+    "status": "IN_PROGRESS",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-11-02T00:24:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-02T00:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-11-02T20:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0018",
+    "student": {
+      "student_id": 12,
+      "roll_no": "231012",
+      "full_name": "Shahzaib Butt",
+      "block_code": "A",
+      "room_code": "A203",
+      "bed_code": "A203-A"
+    },
+    "category": "INTERNET",
+    "priority": "MEDIUM",
+    "title": "LAN port not working",
+    "description": "The LAN port in room A203 shows no connection even with a new cable.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-11-05T15:48:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-05T15:48:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-11-06T11:48:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-11-09T15:48:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-11-09T15:48:00.000Z"
+    }
+  },
+  {
+    "complaint_no": "CMP-0019",
+    "student": {
+      "student_id": 3,
+      "roll_no": "231003",
+      "full_name": "Usman Tariq",
+      "block_code": "A",
+      "room_code": "A102",
+      "bed_code": "A102-B"
+    },
+    "category": "CLEANLINESS",
+    "priority": "LOW",
+    "title": "Windows need cleaning",
+    "description": "The windows of room A102 have not been cleaned this term and let in very little light.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-11-09T07:12:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-09T07:12:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0020",
+    "student": {
+      "student_id": 13,
+      "roll_no": "231013",
+      "full_name": "Danish Nawaz",
+      "block_code": "A",
+      "room_code": "A204",
+      "bed_code": "A204-A"
+    },
+    "category": "SECURITY",
+    "priority": "MEDIUM",
+    "title": "Visitor entry not checked",
+    "description": "Visitors are entering Block A at night without signing the register at the gate.",
+    "status": "IN_PROGRESS",
+    "created_by": {
+      "username": "admin",
+      "role": "ADMIN"
+    },
+    "created_at": {
+      "$date": "2026-11-12T22:36:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-12T22:36:00.000Z"
+        },
+        "by": "admin",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-11-13T18:36:00.000Z"
+        },
+        "by": "admin",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0021",
+    "student": {
+      "student_id": 1,
+      "roll_no": "231001",
+      "full_name": "Ahmed Khan",
+      "block_code": "A",
+      "room_code": "A101",
+      "bed_code": "A101-A"
+    },
+    "category": "MESS_FOOD",
+    "priority": "MEDIUM",
+    "title": "Dinner menu repeats too often",
+    "description": "The same lentil dish is served for dinner four times a week. Please add more variety to the menu.",
+    "status": "OPEN",
+    "created_by": {
+      "username": "warden.ali",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-11-16T09:00:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-16T09:00:00.000Z"
+        },
+        "by": "warden.ali",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      }
+    ],
+    "resolved_at": null
+  },
+  {
+    "complaint_no": "CMP-0022",
+    "student": {
+      "student_id": 17,
+      "roll_no": "231017",
+      "full_name": "Ayesha Noor",
+      "block_code": "B",
+      "room_code": "B101",
+      "bed_code": "B101-A"
+    },
+    "category": "FURNITURE",
+    "priority": "LOW",
+    "title": "Mattress torn",
+    "description": "The mattress on bed B101-A is torn at one corner and the foam is coming out.",
+    "status": "RESOLVED",
+    "created_by": {
+      "username": "warden.sana",
+      "role": "WARDEN"
+    },
+    "created_at": {
+      "$date": "2026-11-20T00:24:00.000Z"
+    },
+    "updates": [
+      {
+        "at": {
+          "$date": "2026-11-20T00:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "OPEN",
+        "note": "Complaint logged"
+      },
+      {
+        "at": {
+          "$date": "2026-11-20T20:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "IN_PROGRESS",
+        "note": "Maintenance staff informed"
+      },
+      {
+        "at": {
+          "$date": "2026-11-22T00:24:00.000Z"
+        },
+        "by": "warden.sana",
+        "status": "RESOLVED",
+        "note": "Checked with the student: fixed"
+      }
+    ],
+    "resolved_at": {
+      "$date": "2026-11-22T00:24:00.000Z"
+    }
+  }
+]

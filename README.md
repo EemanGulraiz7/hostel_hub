@@ -74,6 +74,146 @@ You can also run the files one by one in number order (02 to 12). The whole set 
 
 Only bcrypt hashes are stored in `APP_USERS`. These are demo passwords for the lab; the real database password for the backend goes in a `.env` file that is never committed.
 
+## Web application (M3): how to run it
+
+```
+backend/                 Node.js + Express API (the only thing that talks to the databases)
+  .env.example           copy to .env and fill in (never commit .env)
+  src/server.js          starts the app, mounts the routes, serves frontend/
+  src/config.js          reads .env
+  src/db/oracle.js       node-oracledb pool, bind-variable helpers
+  src/db/mongo.js        MongoDB connection (complaints)
+  src/middleware/        auth.js (JWT cookie, roles), errors.js (ORA-200xx -> messages)
+  src/validation.js      server-side validation for every form
+  src/routes/            auth, dashboard, students, allocations, invoices, reports, complaints, audit
+  src/seedMongo.js       npm run seed:mongo
+  tests/api_tests.js     npm run test:api  (28 checks: T01 to T13 through the API)
+frontend/                plain HTML + CSS + JavaScript, no build step
+  *.html                 one file per screen
+  js/app.js              shared: api() calls, sidebar, messages, field errors
+  js/<screen>.js         one script per screen
+mongodb/
+  complaints_seed.json   22 complaint documents
+  complaints_crud.mongosh.js  insertMany / insertOne / find / updateOne / deleteOne with before and after
+```
+
+### What you need
+
+- The Oracle database from the steps above (HOSTELHUB schema loaded)
+- **Node.js 18 or newer** (https://nodejs.org, LTS version)
+- **MongoDB Community Server** and **mongosh** (https://www.mongodb.com/try/download/community). MongoDB Compass is optional.
+
+No Oracle Instant Client is needed: node-oracledb runs in Thin mode.
+
+### Step 1: configure and install
+
+```bash
+cd backend
+copy .env.example .env        # Windows   (Mac/Linux: cp .env.example .env)
+npm install
+```
+
+Open `backend/.env` and set `ORACLE_PASSWORD=Hostel_Hub_2026`, check `ORACLE_CONNECT_STRING` (`localhost:1521/FREEPDB1`, or `XEPDB1` for 21c XE), and put any long random text in `JWT_SECRET`.
+
+### Step 2: load the MongoDB complaints
+
+With MongoDB running, either:
+
+```bash
+npm run seed:mongo                     # from backend/: loads the 22 complaints
+```
+
+or run the CRUD demo for the report screenshots (from the repository's top folder). It reloads the 22 documents and then shows insertOne, find, updateOne and deleteOne with before/after output:
+
+```bash
+mongosh "mongodb://localhost:27017/hostelhub" mongodb/complaints_crud.mongosh.js
+```
+
+### Step 3: start the app
+
+```bash
+cd backend
+npm start
+```
+
+You should see `Oracle connected as HOSTELHUB`, `MongoDB connected` and `HostelHub running at http://localhost:3000`. Open **http://localhost:3000** and log in with a demo account above. If MongoDB is not running the app still starts; only the Complaints screen is unavailable.
+
+### Step 4 (optional): run the API tests
+
+Leave `npm start` running, open a second terminal:
+
+```bash
+cd backend
+npm run test:api
+```
+
+It prints a table with Test ID, Expected, Actual and PASS/FAIL (`PASSED: 28   FAILED: 0`). It leaves one "Api Test Student" (roll 29xxxx) behind, because a student with allocation history cannot be deleted; re-run `database/00_run_all.sql` before the final demo for clean data.
+
+### Screens
+
+| # | Screen | What it shows | Roles |
+|---|---|---|---|
+| 1 | Login (`login.html`) | bcrypt password check, error on wrong password | everyone |
+| 2 | Dashboard | KPI tiles, **analytics chart** (daily mess revenue + running total from `v_mess_daily_revenue`), block occupancy from `fn_occupancy_pct` / `fn_occupancy_band`, recent audit rows | ADMIN, WARDEN |
+| 3 | Students | search by name / roll / email / program, gender and bed filters, paging | ADMIN, WARDEN (Delete: ADMIN) |
+| 4 | Add / edit student | form with browser + server validation, Oracle constraint errors shown on the right field | ADMIN, WARDEN |
+| 5 | **Allocate Bed** | the business transaction: calls `pr_allocate_bed` with a browser-generated `client_request_id`; shows CREATED / REPLAYED / ORA-20010 and the audit rows for that request; vacate button (`pr_vacate_bed`) | ADMIN, WARDEN |
+| 6 | Invoices | list and filters; generate invoices (`pr_generate_invoice`, one student or every resident with a SAVEPOINT per student); record payments (`trg_payment_audit`) | view: both; billing: ADMIN |
+| 7 | Reports | the 4 analytical reports: running total, 7-day moving average, partitioned RANK, LAG/LEAD trend | ADMIN, WARDEN |
+| 8 | Complaints | **MongoDB** create (insertOne), list/search (find), status change (updateOne), stats (aggregate), delete (ADMIN) | ADMIN, WARDEN |
+| 9 | Audit log | every AUDIT_LOG row with filters | ADMIN only (a warden gets "access denied" and HTTP 403) |
+
+### Demonstrating safe retries in the browser (T09 to T11)
+
+1. Allocate Bed: choose a student and a bed, click **Allocate bed**: result **CREATED** (HTTP 201), one `ALLOCATE_SUCCESS` audit row.
+2. Click **Send same request again**: result **REPLAYED** (HTTP 200), same allocation number, no new audit row, bed count unchanged.
+3. Pick a different bed and click **Send same request again**: rejected with **ORA-20010** (HTTP 409); the first allocation is unchanged and only an `ALLOCATE_FAILED` note is logged.
+4. **Start new allocation** creates a new request ID for the next, separate allocation.
+
+### API endpoints
+
+All under `/api`, JSON in and out. Everything except login needs the login cookie.
+
+| Method and path | Does | Oracle / MongoDB |
+|---|---|---|
+| `POST /auth/login`, `POST /auth/logout`, `GET /auth/me` | login with two roles | `APP_USERS` (bcrypt), `AUDIT_LOG` |
+| `GET /dashboard`, `GET /dashboard/revenue` | dashboard data and chart | functions, views, `countDocuments` |
+| `GET/POST /students`, `GET/PUT/DELETE /students/:id` | student CRUD (DELETE: ADMIN) | `STUDENTS`, `fn_outstanding_balance` |
+| `GET /allocations/options`, `GET /allocations` | form lists and current allocations | `v_vacant_beds`, `v_bed_occupancy` |
+| `POST /allocations` | **allocate (retry-safe)** | `pr_allocate_bed` |
+| `POST /allocations/:id/vacate` | vacate | `pr_vacate_bed` |
+| `GET /allocations/audit/:requestId` | audit rows of one request | `AUDIT_LOG` |
+| `GET /invoices`, `GET /invoices/:id` | invoices | `INVOICES`, `PAYMENTS` |
+| `POST /invoices/generate`, `POST /invoices/generate-month` | billing (ADMIN) | `pr_generate_invoice`, SAVEPOINT |
+| `POST /invoices/:id/payments` | payment (ADMIN) | `trg_payment_audit` |
+| `GET /reports/running-total`, `/moving-average`, `/room-ranking`, `/mess-trend` | 4 analytical reports | window functions |
+| `GET/POST /complaints`, `GET /complaints/stats`, `GET/PATCH/DELETE /complaints/:id` | complaints | MongoDB `complaints` |
+| `GET /audit` | audit log (ADMIN) | `AUDIT_LOG` |
+
+### Security choices (for the report)
+
+- The browser only calls the backend. Database users and passwords exist only in `backend/.env`.
+- Every Oracle statement uses bind variables (`:name`), never string concatenation, so input cannot change the SQL. MongoDB filters are built only from allowed values, and search text is regex-escaped.
+- Passwords are stored as bcrypt hashes; login compares hashes and takes the same time for an unknown username.
+- The login is a signed JWT in an `httpOnly`, `sameSite=strict` cookie. Roles are checked on the server (`requireRole('ADMIN')`); hiding buttons in the page is only for a tidy screen.
+- The user id passed to PL/SQL comes from the login token, never from the browser.
+- Every form is validated in the browser for quick feedback and again on the server (`src/validation.js`); Oracle constraints and triggers are the last line of defence. Errors come back as clear messages with the Oracle code (for example `ORA-20010`).
+- `helmet` adds security headers, including a Content-Security-Policy that only allows scripts from this server.
+
+### Requirement map (web part)
+
+| Requirement | Where |
+|---|---|
+| Custom frontend + backend API connected to Oracle | `frontend/`, `backend/src/routes/` |
+| 5+ screens: login, dashboard, search/list, add/edit, transaction | screens 1 to 5 above (9 in total) |
+| Validation and error messages | `src/validation.js`, `src/middleware/errors.js`, `showMessage()` / `showFieldErrors()` in `js/app.js` |
+| Analytical report visible on the website | Dashboard chart + Reports screen |
+| Critical action calls PL/SQL with parameterized SQL | `routes/allocations.js` -> `pr_allocate_bed` |
+| Login, two roles, no plaintext passwords, `.env.example` | `routes/auth.js`, `middleware/auth.js`, `backend/.env.example` |
+| `client_request_id` passed to Oracle, retries tested from the browser and API | Allocate Bed screen, `tests/api_tests.js` T09 to T11 |
+| MongoDB collection with 20+ documents, mongosh CRUD | `mongodb/complaints_seed.json` (22), `mongodb/complaints_crud.mongosh.js` |
+| MongoDB create/read feature on the website | Complaints screen, `routes/complaints.js` |
+
 ## The core transaction: retry-safe Allocate Bed
 
 `pr_allocate_bed(p_client_request_id, p_student_id, p_bed_id, p_term_id, p_user_id, o_allocation_id, o_result)`

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complaints | HostelHub</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="complaints">
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="page-header">
+      <div>
+        <h1>Complaints</h1>
+        <span class="muted">MongoDB module: <code>hostelhub.complaints</code> collection, through the backend API</span>
+      </div>
+    </div>
+    <div id="messages"></div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Log a new complaint</h2>
+        <form id="complaintForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="roll_no">Student roll number *</label>
+              <input id="roll_no" name="roll_no" inputmode="numeric" maxlength="6" placeholder="e.g. 231004">
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="category">Category *</label>
+              <select id="category" name="category">
+                <option value="">Choose...</option>
+                <option value="ELECTRICAL">Electrical</option><option value="PLUMBING">Plumbing</option>
+                <option value="FURNITURE">Furniture</option><option value="CLEANLINESS">Cleanliness</option>
+                <option value="MESS_FOOD">Mess / food</option><option value="INTERNET">Internet</option>
+                <option value="SECURITY">Security</option><option value="OTHER">Other</option>
+              </select>
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority"><option>LOW</option><option selected>MEDIUM</option><option>HIGH</option></select>
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="title">Title *</label>
+              <input id="title" name="title" maxlength="100">
+              <span class="field-error"></span>
+            </div>
+            <div class="field full">
+              <label for="description">Description *</label>
+              <textarea id="description" name="description" maxlength="1000"></textarea>
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <p class="muted small">The roll number is checked in Oracle before the document is saved in MongoDB.</p>
+          <div class="form-actions"><button class="btn" type="submit" id="saveBtn">Save complaint</button></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Summary</h2>
+        <p class="muted small">MongoDB <code>aggregate([{ $group: ... }])</code></p>
+        <div id="stats"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <form id="filterForm" class="filters">
+        <div class="field grow"><label for="q">Search</label><input id="q" name="q" placeholder="Roll no, name, title or CMP number" maxlength="50"></div>
+        <div class="field"><label for="fStatus">Status</label>
+          <select id="fStatus" name="status"><option value="">All</option><option>OPEN</option><option>IN_PROGRESS</option><option>RESOLVED</option></select></div>
+        <div class="field"><label for="fCategory">Category</label>
+          <select id="fCategory" name="category"><option value="">All</option>
+            <option>ELECTRICAL</option><option>PLUMBING</option><option>FURNITURE</option><option>CLEANLINESS</option>
+            <option>MESS_FOOD</option><option>INTERNET</option><option>SECURITY</option><option>OTHER</option></select></div>
+        <button class="btn" type="submit">Filter</button>
+      </form>
+      <div class="table-wrap"><table>
+        <thead><tr><th>No.</th><th>Logged</th><th>Student</th><th>Room</th><th>Category</th><th>Priority</th><th>Complaint</th><th>Status</th><th></th></tr></thead>
+        <tbody id="rows"><tr><td colspan="9" class="empty">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/complaints.js"></script>
+</body>
+</html>

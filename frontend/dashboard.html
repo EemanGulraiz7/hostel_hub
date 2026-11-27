@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | HostelHub</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="dashboard">
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main>
+    <div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+        <span class="muted" id="welcome"></span>
+      </div>
+      <a class="btn" href="/allocate.html">Allocate a bed</a>
+    </div>
+    <div id="messages"></div>
+
+    <!-- KPI tiles -->
+    <div class="grid grid-4" style="margin-bottom:18px">
+      <div class="card kpi"><div class="label">Bed occupancy</div><div class="value" id="kpiOcc">-</div><div class="sub" id="kpiOccSub"></div></div>
+      <div class="card kpi"><div class="label">Vacant beds</div><div class="value" id="kpiVacant">-</div><div class="sub" id="kpiVacantSub"></div></div>
+      <div class="card kpi"><div class="label">Outstanding dues</div><div class="value" id="kpiDues">-</div><div class="sub" id="kpiDuesSub"></div></div>
+      <div class="card kpi"><div class="label">Open complaints</div><div class="value" id="kpiComplaints">-</div><div class="sub">from MongoDB</div></div>
+    </div>
+
+    <!-- Analytics chart: v_mess_daily_revenue -->
+    <div class="card">
+      <div class="page-header" style="margin-bottom:8px">
+        <div>
+          <h2 style="margin:0">Daily mess revenue and running total</h2>
+          <span class="muted small">Analytical SQL: <code>SUM(revenue) OVER (PARTITION BY month ORDER BY meal_date)</code> from view <code>v_mess_daily_revenue</code></span>
+        </div>
+        <div class="field">
+          <label for="monthSelect" class="small">Month</label>
+          <select id="monthSelect"></select>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="revenueChart" aria-label="Daily mess revenue chart"></canvas></div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Occupancy by block</h2>
+        <p class="muted small">Calculated by PL/SQL functions <code>fn_occupancy_pct</code> and <code>fn_occupancy_band</code>.</p>
+        <div id="blocks"></div>
+      </div>
+      <div class="card">
+        <h2>Recent activity</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>When</th><th>Action</th><th>By</th></tr></thead>
+          <tbody id="recent"></tbody>
+        </table></div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
