@@ -22,14 +22,17 @@
         from the index alone (no table access at all).
 
    IX2  ix_students_upper_name  ON students (UPPER(full_name))
-        Business question: the "Search students" screen of the website
-        finds a student by the start of the name, case-insensitively:
+        Business question: find a student by the START of the name,
+        case-insensitively (for example a type-ahead box in the Allocate
+        Bed form, or a warden looking up "ayesha"):
           WHERE UPPER(full_name) LIKE UPPER(:q) || '%'
         A normal index on full_name cannot be used once the column is
         wrapped in UPPER(), so this is a FUNCTION-BASED index on exactly
-        the expression the query uses. (A search with a LEADING wildcard,
-        LIKE '%ali%', can never use a B-tree index, so the API should use
-        prefix search for this to help.)
+        the expression the query uses.
+        Honest limit: the website's Students screen searches ANYWHERE in
+        the name (LIKE '%' || :q || '%'), and a leading wildcard can never
+        use a B-tree index, so that screen still does a full scan. The
+        last plan in this script shows exactly that.
 
    What the script does for each index
      1. drop the index if it exists (so the script is re-runnable)

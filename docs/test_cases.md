@@ -1,6 +1,6 @@
 # HostelHub test cases (T01 to T13)
 
-This is the test table for the report (requirement section 5). The database tests were run on Oracle 23ai Free on 27 Nov 2026 and their **Actual** column is the real output. Rows marked **TO FILL** need the website, mongosh or APEX: run them during the demo, paste what you see, and set Pass/Fail.
+This is the test table for the report (requirement section 5). The database tests were run on Oracle 23ai Free on 27 Nov 2026 and their **Actual** column is the real output. Rows marked **TO FILL** need the website, mongosh or APEX. For the web rows, `cd backend && npm run test:api` prints Input / Expected / Actual / PASS-FAIL for each one (T05-web, T06a-c, T07b, T09 to T11 through the API, T12a, T12b, T13), so paste its output, then add a browser screenshot for each. T07a (mongosh) and the APEX report are done by hand.
 
 How to reproduce the database rows: run `database/00_run_all.sql` (T01 to T04, T05, T08 rollback, T09 to T11 print in `run_all.log`), then `database/13_indexes_and_plans.sql` (T08 index) and the steps in `docs/backup_restore.md` (T08 recovery).
 

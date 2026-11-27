@@ -110,7 +110,7 @@ One paragraph and two screenshots: the Interactive Report on `v_vacant_beds`, gr
 | IX2 `students(UPPER(full_name))` | TABLE ACCESS FULL, cost 3, 7 buffers | INDEX RANGE SCAN on IX_STUDENTS_UPPER_NAME, cost 2, 3 buffers |
 
 - Screenshot of one before and one after DBMS_XPLAN output.
-- Observation: gains are small because the tables are small (30 students, 4,200 meals); MEAL_LOG grows by about 90 rows a day, so IX1 matters more each month. A leading-wildcard search (`LIKE '%ALI%'`) still does a full scan, so the website search should match by prefix to benefit from IX2.
+- Observation: gains are small because the tables are small (30 students, 4,200 meals); MEAL_LOG grows by about 90 rows a day, so IX1 matters more each month. IX2 helps prefix searches only. The website's Students screen matches anywhere in the name (`LIKE '%ALI%'`), which still does a full scan (shown by the last plan in the script), so say so honestly: IX2 is demonstrated as a SQL plan comparison, and switching the screen to prefix search would let it use the index.
 
 ## 11. Administration
 
